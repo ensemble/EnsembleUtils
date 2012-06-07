@@ -5,9 +5,12 @@ namespace SlmCmfUtils;
 use Zend\ModuleManager\Feature;
 use Zend\EventManager\Event;
 
+use SlmCmfUtils\View\Helper\Url;
+
 class Module implements
     Feature\AutoloaderProviderInterface,
-    Feature\ConfigProviderInterface
+    Feature\ConfigProviderInterface,
+    Feature\ServiceProviderInterface
 {
     public function getAutoloaderConfig()
     {
@@ -19,6 +22,25 @@ class Module implements
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+    
+    public function getServiceConfiguration()
+    {
+        return array(
+            'factories' => array(
+                'SlmCmfUtils\View\Helper\Url' => function ($sm) {
+                    $helper = new Url;
+                    $router = $sm->get('router');
+                    $helper->setRouter($router);
+                    
+                    $event  = $sm->get('application')->getMvcEvent();
+                    $match  = $event->getRouteMatch();
+                    $helper->setRouteMatch($match);
+                    
+                    return $helper;
+                }
             ),
         );
     }

@@ -3,6 +3,7 @@ return array(
     'view_manager' => array(
         'helper_map' => array(
             'slug' => 'SlmCmfUtils\View\Helper\Slug',
+            'url'  => 'SlmCmfUtils\View\Helper\Url',
         ),
     ),
 
