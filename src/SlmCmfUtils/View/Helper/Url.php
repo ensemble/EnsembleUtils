@@ -41,7 +41,7 @@ use Zend\View\Exception;
  * 
  * The name of all page routes start with the id of the page. As this is an 
  * unknown parameter for the view, this view helper prepends the root part
- * of the route. This happpens when the route name starts with a /.
+ * of the route. This happpens when the route name argument starts with a /.
  * 
  * Therefore common route names like "user" and "admin" will work, but for a 
  * special module Foo with a subroute "view-article", the route name /view-article
