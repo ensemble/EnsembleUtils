@@ -80,7 +80,15 @@ class Url extends BaseUrl
             }
             
             if (false !== ($pos = strpos($routeName, '/'))) {
-                $name = substr($routeName, 0, $pos) . $name;
+                /**
+                 * If we request the name /, it will mean that we need to only get
+                 * the root part of the route without any other module route params
+                 */
+                if ('/' === $name) {
+                    $name = substr($routeName, 0, $pos);
+                } else {
+                    $name = substr($routeName, 0, $pos) . $name;
+                }
             } else {
                 $name = $routeName . $name;
             }
