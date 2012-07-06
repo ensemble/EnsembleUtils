@@ -42,32 +42,32 @@
 return array(
     'view_manager' => array(
         'helper_map' => array(
-            'slug' => 'SlmCmfUtils\View\Helper\Slug',
-            'url'  => 'SlmCmfUtils\View\Helper\Url',
+            'slug' => 'Ensemble\Utils\View\Helper\Slug',
+            'url'  => 'Ensemble\Utils\View\Helper\Url',
         ),
     ),
 
     'controller' => array(
         'map' => array(
-            'slug' => 'SlmCmfUtils\Controller\Plugin\Slug',
+            'slug' => 'Ensemble\Utils\Controller\Plugin\Slug',
         ),
     ),
 
     'di' => array(
         'instance' => array(
-            'SlmCmfUtils\Filter\Slug' => array(
+            'Ensemble\Utils\Filter\Slug' => array(
                 'parameters' => array(
                     'slugifier' => 'Bacon\Text\Slugifier\Slugifier'
                 ),
             ),
-            'SlmCmfUtils\Controller\Plugin\Slug' => array(
+            'Ensemble\Utils\Controller\Plugin\Slug' => array(
                 'parameters' => array(
-                    'filter' => 'SlmCmfUtils\Filter\Slug'
+                    'filter' => 'Ensemble\Utils\Filter\Slug'
                 ),
             ),
-            'SlmCmfUtils\View\Helper\Slug' => array(
+            'Ensemble\Utils\View\Helper\Slug' => array(
                 'parameters' => array(
-                    'filter' => 'SlmCmfUtils\Filter\Slug'
+                    'filter' => 'Ensemble\Utils\Filter\Slug'
                 ),
             ),
         ),

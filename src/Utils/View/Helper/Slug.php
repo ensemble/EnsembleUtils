@@ -39,33 +39,33 @@
  * @link        http://ensemble.github.com
  */
 
-namespace SlmCmfUtils\Filter;
+namespace Ensemble\Utils\View\Helper;
 
-use Zend\Filter\AbstractFilter;
-use Bacon\Text\Slugifier\Slugifier;
+use Zend\View\Helper\AbstractHelper;
+use Ensemble\Utils\Filter\Slug as Filter;
 
 /**
  * Description of Slug
  *
- * @package
- * @subpackage
+ * @package    Ensemble\Utils
+ * @subpackage View
  * @author     Jurian Sluiman <jurian@soflomo.com>
  */
-class Slug extends AbstractFilter
+class Slug extends AbstractHelper
 {
     /**
      *
-     * @var Slugifier
+     * @var Filter
      */
-    protected $slugifier;
+    protected $filter;
 
-    public function __construct(Slugifier $slugifier)
+    public function __construct (Filter $filter)
     {
-        $this->slugifier = $slugifier;
+        $this->filter = $filter;
     }
 
-    public function filter($value)
+    public function __invoke($value)
     {
-        return $this->slugifier->slugify($value);
+        return $this->filter->filter($value);
     }
 }

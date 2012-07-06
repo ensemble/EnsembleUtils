@@ -40,11 +40,11 @@
  */
 
 use Zend\Mvc\Router;
-use SlmCmfUtils\View\Helper;
+use Ensemble\Utils\View\Helper;
 
 return array(
     'factories' => array(
-        'SlmCmfUtils\View\Helper\Url' => function ($sm) {
+        'Ensemble\Utils\View\Helper\Url' => function ($sm) {
             $helper = new Helper\Url;
             $router = $sm->get('router');
 

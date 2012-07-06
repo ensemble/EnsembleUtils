@@ -39,7 +39,7 @@
  * @link        http://ensemble.github.com
  */
 
-namespace SlmCmfUtils\View\Helper;
+namespace Ensemble\Utils\View\Helper;
 
 use Zend\View\Helper\Url as BaseUrl;
 use Zend\View\Exception;
@@ -55,7 +55,7 @@ use Zend\View\Exception;
  * special module Foo with a subroute "view-article", the route name /view-article
  * will be transformed to $id/view-article to match the appropriate page.
  *
- * @package    SlmCmfUtils
+ * @package    Ensemble\Utils
  * @subpackage View
  * @author     Jurian Sluiman <jurian@soflomo.com>
  */

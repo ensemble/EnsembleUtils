@@ -39,7 +39,7 @@
  * @link        http://ensemble.github.com
  */
 
-namespace SlmCmfUtils;
+namespace Ensemble\Utils;
 
 use Zend\ModuleManager\Feature;
 use Zend\EventManager\Event;

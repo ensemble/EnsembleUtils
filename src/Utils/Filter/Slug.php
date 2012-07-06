@@ -39,33 +39,33 @@
  * @link        http://ensemble.github.com
  */
 
-namespace SlmCmfUtils\Controller\Plugin;
+namespace Ensemble\Utils\Filter;
 
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use SlmCmfUtils\Filter\Slug as Filter;
+use Zend\Filter\AbstractFilter;
+use Bacon\Text\Slugifier\Slugifier;
 
 /**
  * Description of Slug
  *
- * @package    SlmCmfUtils
- * @subpackage Controller
+ * @package    Ensemble\Utils
+ * @subpackage Filter
  * @author     Jurian Sluiman <jurian@soflomo.com>
  */
-class Slug extends AbstractPlugin
+class Slug extends AbstractFilter
 {
     /**
      *
-     * @var Filter
+     * @var Slugifier
      */
-    protected $filter;
+    protected $slugifier;
 
-    public function __construct(Filter $filter)
+    public function __construct(Slugifier $slugifier)
     {
-        $this->filter = $filter;
+        $this->slugifier = $slugifier;
     }
 
-    public function __invoke($name)
+    public function filter($value)
     {
-        return $this->filter->filter($name);
+        return $this->slugifier->slugify($value);
     }
 }

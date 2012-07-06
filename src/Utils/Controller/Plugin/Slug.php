@@ -39,19 +39,19 @@
  * @link        http://ensemble.github.com
  */
 
-namespace SlmCmfUtils\View\Helper;
+namespace Ensemble\Utils\Controller\Plugin;
 
-use Zend\View\Helper\AbstractHelper;
-use SlmCmfUtils\Filter\Slug as Filter;
+use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Ensemble\Utils\Filter\Slug as Filter;
 
 /**
  * Description of Slug
  *
- * @package
- * @subpackage
+ * @package    Ensemble\Utils
+ * @subpackage Controller
  * @author     Jurian Sluiman <jurian@soflomo.com>
  */
-class Slug extends AbstractHelper
+class Slug extends AbstractPlugin
 {
     /**
      *
@@ -59,13 +59,13 @@ class Slug extends AbstractHelper
      */
     protected $filter;
 
-    public function __construct (Filter $filter)
+    public function __construct(Filter $filter)
     {
         $this->filter = $filter;
     }
 
-    public function __invoke($value)
+    public function __invoke($name)
     {
-        return $this->filter->filter($value);
+        return $this->filter->filter($name);
     }
 }
