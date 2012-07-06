@@ -1,13 +1,13 @@
 {
-    "name": "slm-cmf/utils",
-    "description": "CMF Utility package for the SLM content management framework",
+    "name": "ensemble/utils",
+    "description": "CMF Utility package for the ensemble content management framework",
     "type": "library",
-    "license": "Unlicense",
+    "license": "new-bsd",
     "keywords": [
         "cmf",
         "zf2"
     ],
-    "homepage": "https://github.com/juriansluiman/SlmCmfUtils",
+    "homepage": "https://github.com/ensemble/EnsembleUtils",
     "authors": [
         {
             "name": "Jurian Sluiman",
@@ -20,8 +20,11 @@
         "zendframework/zendframework": "dev-master"
     },
     "autoload": {
+        "psr-0": {
+            "Ensemble\\Utils": "src/"
+        },
         "classmap": [
-            "./"
+            "./Module.php"
         ]
     }
 }
