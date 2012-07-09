@@ -42,12 +42,10 @@
 namespace Ensemble\Utils;
 
 use Zend\ModuleManager\Feature;
-use Zend\EventManager\Event;
 
 class Module implements
     Feature\AutoloaderProviderInterface,
-    Feature\ConfigProviderInterface,
-    Feature\ServiceProviderInterface
+    Feature\ViewHelperProviderInterface
 {
     public function getAutoloaderConfig()
     {
@@ -63,13 +61,8 @@ class Module implements
         );
     }
 
-    public function getServiceConfiguration()
+    public function getViewHelperConfiguration()
     {
         return include __DIR__ . '/config/services.config.php';
-    }
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
     }
 }

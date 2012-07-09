@@ -44,15 +44,15 @@ use Ensemble\Utils\View\Helper;
 
 return array(
     'factories' => array(
-        'Ensemble\Utils\View\Helper\Url' => function ($sm) {
+        'url' => function ($sm) {
             $helper = new Helper\Url;
-            $router = $sm->get('router');
+            $router = $sm->getServiceLocator()->get('router');
 
             if ($router instanceof Router\RouteStackInterface) {
                 $helper->setRouter($router);
             }
 
-            $event  = $sm->get('application')->getMvcEvent();
+            $event  = $sm->getServiceLocator()->get('application')->getMvcEvent();
             $match  = $event->getRouteMatch();
 
             if ($match instanceof Router\RouteMatch) {
@@ -61,5 +61,8 @@ return array(
 
             return $helper;
         },
+    ),
+    'invokables' => array(
+        'slug' => 'Ensemble\Utils\View\Helper\Slug',
     ),
 );

@@ -42,10 +42,9 @@
 namespace Ensemble\Utils\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Ensemble\Utils\Filter\Slug as Filter;
 
 /**
- * Description of Slug
+ * Slug helper for view scripts
  *
  * @package    Ensemble\Utils
  * @subpackage View
@@ -54,18 +53,21 @@ use Ensemble\Utils\Filter\Slug as Filter;
 class Slug extends AbstractHelper
 {
     /**
+     * Creates a simple slug from a string
      *
-     * @var Filter
+     * @param  string  $string             To create slug from
+     * @return string Slug                 The slug made from the input
      */
-    protected $filter;
-
-    public function __construct (Filter $filter)
+    public function __invoke($string)
     {
-        $this->filter = $filter;
-    }
+		$string = htmlentities($string);
+        $string = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/','$1',$string);
+        $string = html_entity_decode($string);
+        $search = explode(",","!,?,:,;,\',\",`,~,/, ");
+        $replace = explode(",",",,,,,,,,-,-");
+        $string = str_replace($search, $replace, $string);
+        $string = str_replace(",", "", $string);
 
-    public function __invoke($value)
-    {
-        return $this->filter->filter($value);
+        return urlencode(strtolower($string));
     }
 }
