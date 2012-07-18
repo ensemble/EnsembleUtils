@@ -39,30 +39,38 @@
  * @link        http://ensemble.github.com
  */
 
-namespace Ensemble\Utils;
+use Zend\Mvc\Router;
+use Ensemble\Utils\View\Helper;
+use Ensemble\Utils\Controller\Plugin;
 
-use Zend\ModuleManager\Feature;
+return array(
+    'view_helpers' => array(
+        'factories' => array(
+            'url' => function ($sm) {
+                $helper = new Helper\Url;
+                $router = $sm->getServiceLocator()->get('router');
 
-class Module implements
-    Feature\AutoloaderProviderInterface,
-    Feature\ConfigProviderInterface
-{
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/Utils',
-                ),
-            ),
-        );
-    }
+                if ($router instanceof Router\RouteStackInterface) {
+                    $helper->setRouter($router);
+                }
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-}
+                $event  = $sm->getServiceLocator()->get('application')->getMvcEvent();
+                $match  = $event->getRouteMatch();
+
+                if ($match instanceof Router\RouteMatch) {
+                    $helper->setRouteMatch($match);
+                }
+
+                return $helper;
+            },
+        ),
+        'invokables' => array(
+            'slug' => 'Ensemble\Utils\View\Helper\Slug',
+        ),
+    ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'redirect' => 'Ensemble\Utils\Controller\Plugin\Redirect'
+        ),
+    ),
+);

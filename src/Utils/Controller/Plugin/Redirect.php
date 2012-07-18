@@ -39,30 +39,66 @@
  * @link        http://ensemble.github.com
  */
 
-use Zend\Mvc\Router;
-use Ensemble\Utils\View\Helper;
+namespace Ensemble\Utils\Controller\Plugin;
 
-return array(
-    'factories' => array(
-        'url' => function ($sm) {
-            $helper = new Helper\Url;
-            $router = $sm->getServiceLocator()->get('router');
+use Zend\Mvc\Controller\Plugin\Redirect as BaseRedirect;
+use Zend\Mvc\Exception;
+use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\ModuleRouteListener;
 
-            if ($router instanceof Router\RouteStackInterface) {
-                $helper->setRouter($router);
+/**
+ * {@inheritdoc}
+ */
+class Redirect extends BaseRedirect
+{
+    protected $routeMatch;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRoute($route, array $params = array(), array $options = array())
+    {
+        if ($route !== null && 0 === strpos($route, '/')) {
+            if ($this->getRouteMatch() === null) {
+                throw new Exception\RuntimeException('No RouteMatch instance provided');
             }
 
-            $event  = $sm->getServiceLocator()->get('application')->getMvcEvent();
-            $match  = $event->getRouteMatch();
+            $routeName = $this->getRouteMatch()->getMatchedRouteName();
 
-            if ($match instanceof Router\RouteMatch) {
-                $helper->setRouteMatch($match);
+            if ($routeName === null) {
+                throw new Exception\RuntimeException('RouteMatch does not contain a matched route name');
             }
 
-            return $helper;
-        },
-    ),
-    'invokables' => array(
-        'slug' => 'Ensemble\Utils\View\Helper\Slug',
-    ),
-);
+            if (false !== ($pos = strpos($routeName, '/'))) {
+                /**
+                 * If we request the name /, it will mean that we need to only get
+                 * the root part of the route without any other module route params
+                 */
+                if ('/' === $route) {
+                    $route = substr($routeName, 0, $pos);
+                } else {
+                    $route = substr($routeName, 0, $pos) . $route;
+                }
+            } else {
+                $route = $routeName . $route;
+            }
+        }
+
+        return parent::toRoute($route, $params, $options);
+    }
+
+    public function getRouteMatch()
+    {
+        if ($this->routeMatch) {
+            return $this->routeMatch;
+        }
+
+        $event     = $this->getEvent();
+        $routMatch = $event->getRouteMatch();
+        if (!$routMatch instanceof RouteMatch) {
+            throw new Exception\DomainException('Redirect plugin requires event compose a rout match');
+        }
+        $this->routMatch = $routMatch;
+        return $this->routMatch;
+    }
+}
