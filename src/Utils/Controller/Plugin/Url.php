@@ -41,21 +41,24 @@
 
 namespace Ensemble\Utils\Controller\Plugin;
 
-use Zend\Mvc\Controller\Plugin\Redirect as BaseRedirect;
+use Zend\Mvc\Controller\Plugin\Url as BaseUrl;
+use Zend\Mvc\InjectApplicationEventInterface;
 use Zend\Mvc\Exception;
 use Zend\Mvc\Router\RouteMatch;
 
 /**
- * {@inheritdoc}
+ * @category   Zend
+ * @package    Zend_Mvc
+ * @subpackage Controller
  */
-class Redirect extends BaseRedirect
+class Url extends BaseUrl
 {
     protected $routeMatch;
 
     /**
      * {@inheritdoc}
      */
-    public function toRoute($route, array $params = array(), array $options = array())
+    public function fromRoute($route, array $params = array(), array $options = array())
     {
         if ($route !== null && 0 === strpos($route, '/')) {
             if ($this->getRouteMatch() === null) {
@@ -83,7 +86,7 @@ class Redirect extends BaseRedirect
             }
         }
 
-        return parent::toRoute($route, $params, $options);
+        return parent::fromRoute($route, $params, $options);
     }
 
     public function getRouteMatch()
@@ -92,7 +95,12 @@ class Redirect extends BaseRedirect
             return $this->routeMatch;
         }
 
-        $event     = $this->getEvent();
+        $controller = $this->getController();
+        if (!$controller instanceof InjectApplicationEventInterface) {
+            throw new Exception\DomainException('Url plugin requires a controller that implements InjectApplicationEventInterface');
+        }
+
+        $event     = $controller->getEvent();
         $routMatch = $event->getRouteMatch();
         if (!$routMatch instanceof RouteMatch) {
             throw new Exception\DomainException('Redirect plugin requires event compose a rout match');

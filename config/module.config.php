@@ -70,7 +70,8 @@ return array(
     ),
     'controller_plugins' => array(
         'invokables' => array(
-            'redirect' => 'Ensemble\Utils\Controller\Plugin\Redirect'
+            'redirect' => 'Ensemble\Utils\Controller\Plugin\Redirect',
+            'url'      => 'Ensemble\Utils\Controller\Plugin\Url',
         ),
     ),
 );
