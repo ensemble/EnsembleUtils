@@ -58,7 +58,7 @@ class Url extends BaseUrl
     /**
      * {@inheritdoc}
      */
-    public function fromRoute($route, array $params = array(), array $options = array())
+    public function fromRoute($route, array $params = array(), array $options = array(), $reuseMatchedParams = false)
     {
         if ($route !== null && 0 === strpos($route, '/')) {
             if ($this->getRouteMatch() === null) {
@@ -86,7 +86,7 @@ class Url extends BaseUrl
             }
         }
 
-        return parent::fromRoute($route, $params, $options);
+        return parent::fromRoute($route, $params, $options, $reuseMatchedParams);
     }
 
     public function getRouteMatch()
