@@ -74,7 +74,7 @@ class Url extends BaseUrl
      * @throws Exception\RuntimeException  If no RouteMatch was provided
      * @throws Exception\RuntimeException  If RouteMatch didn't contain a matched route name
      */
-    public function __invoke($name = null, array $params = array(), $options = array(), $reuseMatchedParams = false)
+    public function __invoke($name = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         if ($name !== null && 0 === strpos($name, '/')) {
             if ($this->routeMatch === null) {
