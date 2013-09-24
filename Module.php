@@ -43,6 +43,9 @@ namespace Ensemble\Utils;
 
 use Zend\ModuleManager\Feature;
 
+use Ensemble\Utils\View\Helper;
+use Zend\Mvc\Router;
+
 class Module implements
     Feature\AutoloaderProviderInterface,
     Feature\ConfigProviderInterface
@@ -64,5 +67,30 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'url' => function ($sm) {
+                    $helper = new Helper\Url;
+                    $router = $sm->getServiceLocator()->get('router');
+
+                    if ($router instanceof Router\RouteStackInterface) {
+                        $helper->setRouter($router);
+                    }
+
+                    $event  = $sm->getServiceLocator()->get('application')->getMvcEvent();
+                    $match  = $event->getRouteMatch();
+
+                    if ($match instanceof Router\RouteMatch) {
+                        $helper->setRouteMatch($match);
+                    }
+
+                    return $helper;
+                },
+            ),
+        );
     }
 }

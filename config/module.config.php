@@ -39,31 +39,8 @@
  * @link        http://ensemble.github.com
  */
 
-use Zend\Mvc\Router;
-use Ensemble\Utils\View\Helper;
-use Ensemble\Utils\Controller\Plugin;
-
 return array(
     'view_helpers' => array(
-        'factories' => array(
-            'url' => function ($sm) {
-                $helper = new Helper\Url;
-                $router = $sm->getServiceLocator()->get('router');
-
-                if ($router instanceof Router\RouteStackInterface) {
-                    $helper->setRouter($router);
-                }
-
-                $event  = $sm->getServiceLocator()->get('application')->getMvcEvent();
-                $match  = $event->getRouteMatch();
-
-                if ($match instanceof Router\RouteMatch) {
-                    $helper->setRouteMatch($match);
-                }
-
-                return $helper;
-            },
-        ),
         'invokables' => array(
             'slug' => 'Ensemble\Utils\View\Helper\Slug',
         ),
