@@ -58,7 +58,7 @@ class Url extends BaseUrl
     /**
      * {@inheritdoc}
      */
-    public function fromRoute($route = null, array $params = array(), $options = array(), $reuseMatchedParams = false)
+    public function fromRoute($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         if ($route !== null && 0 === strpos($route, '/')) {
             if ($this->getRouteMatch() === null) {

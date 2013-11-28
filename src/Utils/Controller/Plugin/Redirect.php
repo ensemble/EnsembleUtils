@@ -55,7 +55,7 @@ class Redirect extends BaseRedirect
     /**
      * {@inheritdoc}
      */
-    public function toRoute($route = null, array $params = array(), $options = array(), $reuseMatchedParams = false)
+    public function toRoute($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         if ($route !== null && 0 === strpos($route, '/')) {
             if ($this->getRouteMatch() === null) {
