@@ -98,7 +98,11 @@ class Url extends BaseUrl
                     $name = substr($routeName, 0, $pos) . $name;
                 }
             } else {
-                $name = $routeName . $name;
+                if ('/' === $name) {
+                    $name = $routeName;
+                } else {
+                    $name = $routeName . $name;
+                }
             }
         }
 
