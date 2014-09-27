@@ -63,8 +63,8 @@ class Slug extends AbstractHelper
 		$string = htmlentities($string);
         $string = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/','$1',$string);
         $string = html_entity_decode($string);
-        $search = explode(",","!,?,:,;,\',\",`,~,/, ");
-        $replace = explode(",",",,,,,,,,-,-");
+        $search = explode(",","!,?,:,;,#,',\",`,~,/, ");
+        $replace = explode(",",",,,,,,,,,-,-");
         $string = str_replace($search, $replace, $string);
         $string = str_replace(",", "", $string);
 
