@@ -83,7 +83,7 @@ class Redirect extends BaseRedirect
             }
         }
 
-        return parent::toRoute($route, $params, $options, $reuseMatchedParams = false);
+        return parent::toRoute($route, $params, $options, $reuseMatchedParams);
     }
 
     public function getRouteMatch()
